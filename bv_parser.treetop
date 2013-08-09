@@ -1,0 +1,48 @@
+grammar BV
+	
+	rule program
+		'(' space? lambda1 space? ')'
+	end
+	
+	rule integer
+		('0' / '1')
+	end
+
+	rule identifier
+		[a-z] [a-z_0-9]*
+	end
+
+	rule space
+		[\s]+
+	end
+
+	rule lambda1
+		'lambda' space? '(' identifier ')' space? expression
+	end
+
+	rule lambda2
+		'lambda' space? '(' identifier space identifier ')' space? expression
+	end
+
+	rule if
+		'if0' space expression space expression space expression
+	end
+
+	rule fold
+		'fold' space expression space expression space? '(' space? lambda2 space? ')'
+	end
+
+	rule op1
+		('not' / 'shl1' / 'shr1' / 'shr4' / 'shr16') space? expression
+	end
+
+	rule op2
+		('and' / 'or' / 'xor' / 'plus') space? expression space? expression
+	end
+
+	rule expression
+		integer / identifier / ('(' space? if / fold / op1 / op2 space? ')')
+	end
+
+end
+
